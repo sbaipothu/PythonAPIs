@@ -1,0 +1,78 @@
+commands:
+create virtual env
+pip install djangorestframework
+django-admin startproject DjangoDemo 
+or
+django-admin startproject djangodemo . -> Here . creates the project in current directory
+python manage.py migrate -> creates the database
+python manage.py runserver
+
+python manage.py startapp api_basics
+python manage.py createsuperuser -> enter username, emailid and password
+
+Navigate to url http://127.0.0.1:8000/admin/ and login to the app using above credentials
+
+Serializer:
+Create a model Article in api_basics and then migrate
+python manage.py makemigrations
+
+python manage.py migrate
+
+Register the model in api_basics/admin.py
+
+Add serializers.py and create serializer for the model
+
+From commandline we can insert few articles to play with 
+ from api_basics.models import Article
+from api_basics.serializers import ArticleSerializer
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+
+a = Article(title='Article Title', author='Trivikram', email = 'test@gmail.com')
+a.save()
+
+a = Article(title='Akhanda', author='Boya', email = 'boya@gmail.com')
+a.save()
+
+serializer = ArticleSerializer(a)
+serializer.data
+
+content = JSONRenderer().render(serializer.data)
+content
+
+serializer = ArticleSerializer(Article.objects.all(), many=True)
+serializer.data
+
+Now
+Create ArticleSerializer from ModelSerializer 
+
+on command line check the representation by using below commands
+serializer = ArticleSerializer()
+print(repr(serializer)
+
+Function Based API Views
+csrf_exempt
+api_view decorator
+
+Class Based API Views
+Create class in views.py and update the same in urls.py of the project
+
+
+Generic Views and Mixins
+
+
+Authentication
+BasicAuthentication - Usersname and password - Should be used only when api is https
+TokenAuthentication - Suitable for client - server
+SessionAuthenticaton - It is appropriate for AJAX clients running in the same site
+Import the classes and add them to authentication_classes
+
+Viewsets and Routes
+ViewSets -> Based on views. It doesn't provide get, post type of methods instead it provides list, create, retreive, etc
+
+GenericViewSet -> similar to genericview
+
+ModalViewSet ->  inherits GenericAPIView. Doesn't requires much code just by adding serializer and query set we can access all methods
+
+
+
